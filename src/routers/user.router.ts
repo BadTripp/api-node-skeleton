@@ -41,10 +41,12 @@ UserRouter.post('/token', async (req: Request, res: Response) => {
     // Setting the auth token in cookies
     res.cookie('AuthToken', authToken);
 
-    const { firstName, lastName } = user
+    const { firstName, lastName ,id } = user
 
+    // Send user informations 
     res.status(200)
        .send({
+           id,      // Required for user-cart
            email, 
            firstName,
            lastName, 
