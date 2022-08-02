@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { PaymentMethod } from "models/payment-method.model";
+import { ShoppingCart } from "models/shopping-cart.model";
 import { ShoppingCartRepository } from "../repositories/shopping-cart.repository";
 
 /*
@@ -38,9 +38,12 @@ ShoppingCartRouter.post("/", async (req: Request, res: Response) => {
 */
 ShoppingCartRouter.patch("/", async (req: Request, res: Response) => {
   try {
-    const paymentMethod: PaymentMethod = req.body;
+    const paymentMethod: ShoppingCart = req.body;
     const repo = new ShoppingCartRepository();
-    const result: boolean = await repo.updateDocument(paymentMethod.id, paymentMethod );
+    // Find cart by userId 
+    const CartFound = await repo.getCartByUserId(paymentMethod.userId); 
+    // Find cart by id and update doc
+    const result: boolean = await repo.updateDocument(CartFound.id, paymentMethod );
     res.status(200).send({result});
   } catch (e) {
     res.status(404).send(e.message);

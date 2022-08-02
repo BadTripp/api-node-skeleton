@@ -1,4 +1,5 @@
 export interface PaymentMethod {
+    course: any;
     id: string;
     userId: string;
     description: string;
